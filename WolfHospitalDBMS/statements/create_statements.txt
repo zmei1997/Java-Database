@@ -1,0 +1,96 @@
+CREATE TABLE `Patient` (
+ `PatientId` INT NOT NULL ,
+ `SSN` INT(9) NULL ,
+ `Name` VARCHAR(30) NOT NULL ,
+ `DateOfBirth` DATE NOT NULL ,
+ `Gender` CHAR(1) NOT NULL ,
+ `Age` INT NOT NULL ,
+ `PhoneNumber` VARCHAR(11) NOT NULL ,
+ `Address` VARCHAR(255) NOT NULL ,
+ `Status` VARCHAR(50) NOT NULL ,
+ PRIMARY KEY (`PatientId`)
+);
+CREATE TABLE `Hospital` (
+ `HospitalId` INT NOT NULL ,
+ `AdministratorId` INT NOT NULL ,
+ `Address` VARCHAR(255) NOT NULL ,
+ `Phone` VARCHAR(11) NOT NULL ,
+ `Specialization1` VARCHAR(30) NOT NULL ,
+ `ChargesPerDay1` INT NOT NULL ,
+ `Specialization2` VARCHAR(30) NOT NULL ,
+ `ChargesPerDay2` INT NOT NULL ,
+ `Capacity` INT NOT NULL ,
+ PRIMARY KEY (`HospitalId`)
+);
+CREATE TABLE `Staff` (
+ `StaffId` INT NOT NULL ,
+ `HospitalId` INT NOT NULL ,
+ `Name` VARCHAR(30) NOT NULL ,
+ `Age` INT NOT NULL ,
+ `Gender` CHAR(1) NOT NULL ,
+ `JobTitle` VARCHAR(50) NOT NULL ,
+ `ProfessionalTitle` VARCHAR(50) NOT NULL ,
+ `Department` VARCHAR(30) NOT NULL ,
+ `Phone` VARCHAR(11) NOT NULL ,
+ `EmailAddress` VARCHAR(40) NOT NULL ,
+ `Address` VARCHAR(255) NOT NULL ,
+ PRIMARY KEY (`StaffId`),
+ FOREIGN KEY (`HospitalId`) REFERENCES `Hospital`(`HospitalId`)
+);
+CREATE TABLE `Bed` (
+ `BedNumber` INT NOT NULL ,
+ `HospitalId` INT NOT NULL ,
+ `PatientSSN` INT(9) ,
+ `Specialization` VARCHAR(30) NOT NULL ,
+ `ChargesPerDay` INT NOT NULL ,
+ `NurseId` INT NOT NULL ,
+ PRIMARY KEY (`BedNumber`, `HospitalId`),
+ FOREIGN KEY (`HospitalId`) REFERENCES `Hospital`(`HospitalId`),
+ FOREIGN KEY (`NurseId`) REFERENCES `Staff`(`StaffId`)
+);
+CREATE TABLE `CheckInOut` (
+ `PatientId` INT NOT NULL ,
+ `HospitalId` INT NOT NULL ,
+ `DoctorId` INT NOT NULL ,
+ `BedNumber` INT NULL ,
+ `StartDate` DATE NOT NULL ,
+ `EndDate` DATE NULL ,
+ `RegistrationFee` FLOAT NOT NULL ,
+ `DiagnosisDetail` VARCHAR(255) NULL ,
+ PRIMARY KEY (`PatientId`, `HospitalId`, `DoctorId`, `StartDate`),
+ FOREIGN KEY (`HospitalId`) REFERENCES `Hospital`(`HospitalId`),
+ FOREIGN KEY (`PatientId`) REFERENCES `Patient`(`PatientId`),
+ FOREIGN KEY (`DoctorId`) REFERENCES `Staff`(`StaffId`),
+ FOREIGN KEY (`BedNumber`) REFERENCES `Bed`(`BedNumber`)
+);
+CREATE TABLE `MedicalRecord` (
+ `MedicalRecordId` INT NOT NULL ,
+ `PatientId` INT NOT NULL ,
+ `HospitalId` INT NOT NULL ,
+ `StartDate` DATE NOT NULL ,
+ `EndDate` DATE NULL ,
+ `DoctorId` INT NOT NULL ,
+ `Prescription` VARCHAR(255) NULL ,
+ `Diagnosic` VARCHAR(255) NULL ,
+ `Test` VARCHAR(30) NULL ,
+ `Result` VARCHAR(255) NULL ,
+ `Treatment` VARCHAR(30) NOT NULL ,
+ `ConsultationFee` INT NOT NULL ,
+ `TestFee` INT NOT NULL ,
+ `TreatmentFee` INT NOT NULL ,
+ PRIMARY KEY (`MedicalRecordId`) ,
+ FOREIGN KEY (`HospitalId`) REFERENCES `Hospital`(`HospitalId`),
+ FOREIGN KEY (`PatientId`) REFERENCES `Patient`(`PatientId`),
+ FOREIGN KEY (`DoctorId`) REFERENCES `Staff`(`StaffId`)
+);
+CREATE TABLE `BillingAccount` (
+ `BillingAccountId` INT NOT NULL ,
+ `MedicalRecordId` INT NOT NULL ,
+ `PatientId` INT NOT NULL ,
+ `BillingAddress` VARCHAR(255) NOT NULL ,
+ `Method` VARCHAR(10) NOT NULL ,
+ `CardNumber` VARCHAR(20) NOT NULL ,
+ PRIMARY KEY (`BillingAccountId`) ,
+ FOREIGN KEY (`MedicalRecordId`) REFERENCES `MedicalRecord`(`MedicalRecordId`) ,
+ FOREIGN KEY (`PatientId`) REFERENCES `Patient`(`PatientId`)
+);

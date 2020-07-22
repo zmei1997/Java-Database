@@ -1,0 +1,34 @@
+INSERT INTO `Patient` (`PatientId`, `SSN`, `Name`, `DateOfBirth`, `Gender`, `Age`, `PhoneNumber`, `Address`, `Status`) VALUES
+(3001, NULL, 'John', '1980-02-22', 'M', 39, '513', '81 ABC St, NC 27', 'Treatment complete'),
+(3002, NULL, 'Jason', '1999-04-22', 'M', 20, '418', '82 ABC St, NC 27', 'In treatment');
+
+INSERT INTO `Hospital` (`HospitalId`, `AdministratorId`, `Address`, `Phone`, `Specialization1`, `ChargesPerDay1`, `Specialization2`, `ChargesPerDay2`, `Capacity`) VALUES
+(111, 11101, '111 St NC, 111', '101', 'pediatrics', 10, 'neurology', 15, 100),
+(222, 22201, '222 St NC, 222', '202', 'cardiology', 20, 'oncology', 25, 200);
+
+INSERT INTO `Staff` (`StaffId`, `HospitalId`, `Name`, `Age`, `Gender`, `JobTitle`, `ProfessionalTitle`, `Department`, `Phone`, `EmailAddress`, `Address`) VALUES
+(1001, 111, 'Simpson', 36, 'F', 'Biller', 'Accounts Supervisor', 'Billing', '919', '1001@gmail.com', '21 ABC St, NC 27'),
+(1002, 111, 'David', 45, 'M', 'Nurse', 'Senior Nurse', 'Neurology', '123', '1002@gmail.com', '22 ABC St, NC 27'),
+(1003, 111, 'Lucy', 40, 'F', 'Doctor', 'Senior Surgeon', 'pediatrics', '631', '1003@gmail.com', '42 ABC St, NC 27'),
+(1004, 222, 'Joseph', 41, 'M', 'Doctor', 'cardiologist', 'cardiology', '327', '1004@gmail.com', '51 ABC St, NC 27'),
+(1005, 222, 'Ruth', 35, 'F', 'Nurse', 'Assistant Nurse', 'pediatrics', '456', '1005@gmail.com', '23 ABC St, NC 27'),
+(1010, 111, 'Steven', 65, 'M', 'Doctor', 'Senior Surgeon', 'pediatrics', '632', '1010@gmail.com', '48 ABC St, NC 27');
+
+INSERT INTO `Bed` (`BedNumber`, `HospitalId`, `PatientSSN`, `Specialization`, `ChargesPerDay`, `NurseId`) VALUES
+(5001, 111, NULL, 'neurology', 15, 1002),
+(5002, 111, NULL, 'neurology', 15, 1002),
+(5003, 111, NULL, 'oncology', 25, 1002),
+(5004, 222, NULL, 'cardiology', 20, 1005);
+
+INSERT INTO `CheckInOut` (`PatientId`, `HospitalId`, `DoctorId`, `BedNumber`, `StartDate`, `EndDate`, `RegistrationFee`, `DiagnosisDetail`) VALUES
+(3001, 111, 1003, 5001, '2019-08-05', '2019-08-31', 20, 'abc'),
+(3002, 111, 1003, 5002, '2019-10-15', NULL, 20, 'def'),
+(3001, 111, 1003, 5001, '2019-09-01', NULL, 20, 'TB');
+
+INSERT INTO `MedicalRecord` (`MedicalRecordId`, `PatientId`, `HospitalId`, `StartDate`, `EndDate`, `DoctorId`, `Prescription`, `Diagnosic`, `Test`, `Result`, `Treatment`, `ConsultationFee`, `TestFee`, `TreatmentFee`) VALUES
+(2001, 3001, 111, '2019-08-05', '2019-08-31', 1003, 'antibiotics', 'Testing for TB', 'TB blood test', 'positive', 'TB treatment', 50, 75, 200),
+(2002, 3001, 111, '2019-09-01', '2019-09-16', 1003, 'continue antibiotics', 'Testing for TB', 'X-ray chest (TB) Advanced', 'negative', 'Not required', 0, 125, 0);
+
+INSERT INTO `BillingAccount` (`BillingAccountId`, `MedicalRecordId`, `PatientId`, `BillingAddress`, `Method`, `CardNumber`) VALUES
+(6001, 2001, 3001, '81 ABC St , NC 27', 'Creditcard', '1111222233334444'),
+(6002, 2002, 3002, '82 ABC St , NC 27', 'Creditcard', '4444333322221111');

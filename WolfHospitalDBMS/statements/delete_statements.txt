@@ -1,0 +1,1 @@
+DROP TABLE  `BillingAccount`, `CheckInOut`, `Bed`, `MedicalRecord`, `Patient`, `Staff`, `Hospital`;
