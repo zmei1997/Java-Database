@@ -16,4 +16,6 @@ b.	Patients, who can: <br>
 c.	Doctors, who can: <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i. Enter/update a new medical record for each procedure of a patient, <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ii.	If the doctors are specialists, enter/update a new medical record for tests of patients.<br> 
-
+<img src="https://github.com/zmei1997/Java-Database/blob/master/WolfHospitalDBMS/screenshot/1.png" width="50%" length="50%"><br>
+<img src="https://github.com/zmei1997/Java-Database/blob/master/WolfHospitalDBMS/screenshot/2.png" width="50%" length="50%"><br>
+<img src="https://github.com/zmei1997/Java-Database/blob/master/WolfHospitalDBMS/screenshot/0.png" width="50%" length="50%"><br>
